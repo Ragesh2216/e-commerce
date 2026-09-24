@@ -61,27 +61,27 @@
     }
   };
 
-  // Toast Notification
-  window.showToast = function (message) {
+  // Toast Notification & Redirect to 404 Page
+  window.showToast = function (message, delay = 500) {
     const container = document.getElementById('toast-container');
-    if (!container) return;
+    if (container) {
+      const toast = document.createElement('div');
+      toast.className = 'flex items-center bg-slate-900 text-white text-sm font-medium px-4 py-3 rounded-lg shadow-xl mb-3 space-x-2 transition-all duration-300 transform translate-y-2 opacity-0';
+      toast.innerHTML = `
+        <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        <span>${message}</span>
+      `;
+      container.appendChild(toast);
 
-    const toast = document.createElement('div');
-    toast.className = 'flex items-center bg-slate-900 text-white text-sm font-medium px-4 py-3 rounded-lg shadow-xl mb-3 space-x-2 transition-all duration-300 transform translate-y-2 opacity-0';
-    toast.innerHTML = `
-      <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-      <span>${message}</span>
-    `;
-    container.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 50);
+    }
 
+    // Every pop message redirects to 404 page
     setTimeout(() => {
-      toast.classList.remove('translate-y-2', 'opacity-0');
-    }, 50);
-
-    setTimeout(() => {
-      toast.classList.add('opacity-0', 'translate-y-2');
-      setTimeout(() => toast.remove(), 300);
-    }, 2500);
+      window.location.href = '404.html';
+    }, delay);
   };
 
   // Flash Sale Countdown Timer

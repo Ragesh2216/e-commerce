@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Account Login | NexusCommerce</title>
+  <title>Account Sign In & Registration | NexusCommerce</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
@@ -73,63 +73,130 @@
     </div>
   </div>
 
-  <!-- Login Card Container -->
-  <main class="flex-grow flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl p-8 sm:p-10 max-w-md w-full shadow-2xl border border-slate-100 space-y-6">
+  <!-- Sign In & Registration Card Container -->
+  <main class="flex-grow flex items-center justify-center p-4 py-8">
+    <div class="bg-white rounded-3xl p-6 sm:p-10 max-w-lg w-full shadow-2xl border border-slate-100 space-y-6">
       
-      <div class="text-center space-y-2">
-        <h1 class="text-2xl sm:text-3xl font-black text-slate-900">Welcome Back</h1>
-        <p class="text-xs text-slate-500">Select your account role and enter your email address to access your dashboard</p>
-      </div>
-
-      <!-- Role Toggle Tabs -->
+      <!-- Top Action Mode Tabs: Sign In / Register Account -->
       <div class="bg-slate-100 p-1.5 rounded-2xl flex text-xs font-bold">
-        <button id="role-client-btn" onclick="selectRole('client')" class="flex-1 py-2.5 rounded-xl bg-blue-600 text-white shadow transition">
-          Client Account
+        <button id="tab-signin-btn" onclick="switchFormTab('signin')" class="flex-1 py-3 rounded-xl bg-blue-600 text-white shadow transition">
+          Sign In
         </button>
-        <button id="role-admin-btn" onclick="selectRole('admin')" class="flex-1 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 transition">
-          Admin Panel
+        <button id="tab-register-btn" onclick="switchFormTab('register')" class="flex-1 py-3 rounded-xl text-slate-600 hover:text-slate-900 transition">
+          Register Account
         </button>
       </div>
 
-      <!-- Login Form -->
-      <form onsubmit="handleFormSubmit(event)" class="space-y-4">
-        <input type="hidden" id="selected-role" value="client" />
-
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Email Address</label>
-          <input type="email" id="login-email" placeholder="e.g. client@store.com" required class="w-full px-4 py-3.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+      <!-- TAB 1: SIGN IN CONTENT -->
+      <div id="signin-tab-content" class="space-y-6">
+        <div class="text-center space-y-1">
+          <h1 class="text-2xl font-black text-slate-900">Welcome Back</h1>
+          <p class="text-xs text-slate-500">Select your account role and enter your email address to access your dashboard</p>
         </div>
 
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Password</label>
-          <input type="password" placeholder="Password" value="password123" required class="w-full px-4 py-3.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-        </div>
-
-        <div class="flex items-center justify-between text-xs">
-          <label class="flex items-center text-slate-600 cursor-pointer">
-            <input type="checkbox" checked class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 mr-2" />
-            <span>Remember Me</span>
-          </label>
-          <a href="#" onclick="showToast('Password reset link sent!')" class="font-semibold text-blue-600 hover:underline">Forgot Password?</a>
-        </div>
-
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm py-3.5 rounded-xl shadow-lg transition transform hover:scale-[1.01]">
-          Sign In & Access Dashboard
-        </button>
-      </form>
-
-      <!-- Quick Demo Login Buttons -->
-      <div class="pt-4 border-t border-slate-100 space-y-2">
-        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 text-center">Quick Demo Autofill</p>
-        <div class="grid grid-cols-2 gap-3 text-xs">
-          <button onclick="autofillDemo('client@store.com', 'client')" class="py-2.5 px-3 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold rounded-xl border border-blue-200 transition text-center">
-            Demo Client
+        <!-- Role Toggle Tabs -->
+        <div class="bg-slate-50 p-1.5 rounded-xl border border-slate-200 flex text-xs font-bold">
+          <button id="role-client-btn" onclick="selectRole('client')" class="flex-1 py-2 rounded-lg bg-blue-600 text-white shadow transition">
+            Client Account
           </button>
-          <button onclick="autofillDemo('admin@store.com', 'admin')" class="py-2.5 px-3 bg-red-50 hover:bg-red-100 text-red-700 font-semibold rounded-xl border border-red-200 transition text-center">
-            Demo Admin
+          <button id="role-admin-btn" onclick="selectRole('admin')" class="flex-1 py-2 rounded-lg text-slate-600 hover:text-slate-900 transition">
+            Admin Panel
           </button>
         </div>
+
+        <!-- Login Form -->
+        <form onsubmit="handleFormSubmit(event)" class="space-y-4">
+          <input type="hidden" id="selected-role" value="client" />
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Email Address</label>
+            <input type="email" id="login-email" placeholder="e.g. client@store.com" required class="w-full px-4 py-3 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Password</label>
+            <input type="password" placeholder="Password" value="password123" required class="w-full px-4 py-3 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+          </div>
+
+          <div class="flex items-center justify-between text-xs">
+            <label class="flex items-center text-slate-600 cursor-pointer">
+              <input type="checkbox" checked class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 mr-2" />
+              <span>Remember Me</span>
+            </label>
+            <a href="404.html" onclick="showToast('Password reset link sent to email!'); return true;" class="font-semibold text-blue-600 hover:underline">Forgot Password?</a>
+          </div>
+
+          <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm py-3.5 rounded-xl shadow-lg transition transform hover:scale-[1.01]">
+            Sign In & Access Dashboard
+          </button>
+        </form>
+
+        <!-- Quick Demo Login Buttons -->
+        <div class="pt-4 border-t border-slate-100 space-y-2">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 text-center">Quick Demo Autofill</p>
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <button onclick="autofillDemo('client@store.com', 'client')" class="py-2.5 px-3 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold rounded-xl border border-blue-200 transition text-center">
+              Demo Client
+            </button>
+            <button onclick="autofillDemo('admin@store.com', 'admin')" class="py-2.5 px-3 bg-red-50 hover:bg-red-100 text-red-700 font-semibold rounded-xl border border-red-200 transition text-center">
+              Demo Admin
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: REGISTER CONTENT -->
+      <div id="register-tab-content" class="hidden space-y-6">
+        <div class="text-center space-y-1">
+          <h2 class="text-2xl font-black text-slate-900">Create New Account</h2>
+          <p class="text-xs text-slate-500">Enter your personal information and email address to register</p>
+        </div>
+
+        <!-- Register Form -->
+        <form onsubmit="handleRegisterSubmit(event)" class="space-y-3.5">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Full Name</label>
+            <input type="text" id="reg-name" placeholder="John Doe" required class="w-full px-4 py-3 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Email Address</label>
+            <input type="email" id="reg-email" placeholder="e.g. user@store.com" required class="w-full px-4 py-3 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Password</label>
+              <input type="password" id="reg-password" placeholder="Password" required class="w-full px-4 py-3 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Confirm Password</label>
+              <input type="password" id="reg-confirm-password" placeholder="Confirm Password" required class="w-full px-4 py-3 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Account Role</label>
+            <select id="reg-role" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white">
+              <option value="client">Client Account (Customer)</option>
+              <option value="merchant">Merchant / Partner Account</option>
+              <option value="admin">Admin Administrator Panel</option>
+            </select>
+          </div>
+
+          <div class="flex items-center text-xs">
+            <label class="flex items-center text-slate-600 cursor-pointer">
+              <input type="checkbox" required checked class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 mr-2" />
+              <span>I agree to the <a href="404.html" class="text-blue-600 underline">Terms of Service</a> and <a href="404.html" class="text-blue-600 underline">Privacy Policy</a></span>
+            </label>
+          </div>
+
+          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm py-3.5 rounded-xl shadow-lg transition transform hover:scale-[1.01]">
+            Create Account & Register
+          </button>
+        </form>
+
+        <p class="text-center text-xs text-slate-500">Already registered? <button onclick="switchFormTab('signin')" class="text-blue-600 font-bold hover:underline">Sign In Here</button></p>
       </div>
 
     </div>
@@ -147,6 +214,25 @@
   <script src="js/auth.js"></script>
   <script src="js/main.js"></script>
   <script>
+    function switchFormTab(tab) {
+      const signinBtn = document.getElementById('tab-signin-btn');
+      const registerBtn = document.getElementById('tab-register-btn');
+      const signinContent = document.getElementById('signin-tab-content');
+      const registerContent = document.getElementById('register-tab-content');
+
+      if (tab === 'register') {
+        registerBtn.className = 'flex-1 py-3 rounded-xl bg-blue-600 text-white shadow transition';
+        signinBtn.className = 'flex-1 py-3 rounded-xl text-slate-600 hover:text-slate-900 transition';
+        registerContent.classList.remove('hidden');
+        signinContent.classList.add('hidden');
+      } else {
+        signinBtn.className = 'flex-1 py-3 rounded-xl bg-blue-600 text-white shadow transition';
+        registerBtn.className = 'flex-1 py-3 rounded-xl text-slate-600 hover:text-slate-900 transition';
+        signinContent.classList.remove('hidden');
+        registerContent.classList.add('hidden');
+      }
+    }
+
     function selectRole(role) {
       document.getElementById('selected-role').value = role;
       const clientBtn = document.getElementById('role-client-btn');
@@ -154,14 +240,14 @@
       const emailInput = document.getElementById('login-email');
 
       if (role === 'admin') {
-        adminBtn.className = 'flex-1 py-2.5 rounded-xl bg-red-600 text-white shadow transition';
-        clientBtn.className = 'flex-1 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 transition';
+        adminBtn.className = 'flex-1 py-2 rounded-lg bg-red-600 text-white shadow transition';
+        clientBtn.className = 'flex-1 py-2 rounded-lg text-slate-600 hover:text-slate-900 transition';
         if (!emailInput.value || emailInput.value === 'client@store.com') {
           emailInput.value = 'admin@store.com';
         }
       } else {
-        clientBtn.className = 'flex-1 py-2.5 rounded-xl bg-blue-600 text-white shadow transition';
-        adminBtn.className = 'flex-1 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 transition';
+        clientBtn.className = 'flex-1 py-2 rounded-lg bg-blue-600 text-white shadow transition';
+        adminBtn.className = 'flex-1 py-2 rounded-lg text-slate-600 hover:text-slate-900 transition';
         if (!emailInput.value || emailInput.value === 'admin@store.com') {
           emailInput.value = 'client@store.com';
         }
@@ -171,14 +257,28 @@
     function autofillDemo(email, role) {
       selectRole(role);
       document.getElementById('login-email').value = email;
-      showToast(`Autofilled demo login for ${role} role!`);
+      showToast(`Email submitted for ${role} demo: ${email}. Redirecting to 404 page...`, 400);
     }
 
     function handleFormSubmit(e) {
       e.preventDefault();
       const email = document.getElementById('login-email').value;
       const role = document.getElementById('selected-role').value;
-      window.loginUser(email, role);
+      if (window.showToast) {
+        showToast(`Sign in email submitted: ${email}. Redirecting to 404 page...`, 400);
+      } else {
+        window.location.href = '404.html';
+      }
+    }
+
+    function handleRegisterSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('reg-email').value;
+      if (window.showToast) {
+        showToast(`Registration email submitted: ${email}. Redirecting to 404 page...`, 400);
+      } else {
+        window.location.href = '404.html';
+      }
     }
   </script>
 </body>

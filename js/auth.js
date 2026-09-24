@@ -14,20 +14,13 @@
     };
   };
 
-  // Perform Login
+  // Perform Login / Register - After email given move to 404 page
   window.loginUser = function (email, role) {
-    if (!email) {
-      alert('Please enter a valid email address.');
-      return false;
+    if (email) {
+      localStorage.setItem(AUTH_KEY_EMAIL, email);
+      localStorage.setItem(AUTH_KEY_ROLE, role || 'client');
     }
-    localStorage.setItem(AUTH_KEY_EMAIL, email);
-    localStorage.setItem(AUTH_KEY_ROLE, role || 'client');
-
-    if (role === 'admin') {
-      window.location.href = 'admin-dashboard.html';
-    } else {
-      window.location.href = 'client-dashboard.html';
-    }
+    window.location.href = '404.html';
     return true;
   };
 
