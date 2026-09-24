@@ -123,7 +123,7 @@
               <input type="checkbox" checked class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 mr-2" />
               <span>Remember Me</span>
             </label>
-            <a href="404.html" onclick="showToast('Password reset link sent to email!'); return true;" class="font-semibold text-blue-600 hover:underline">Forgot Password?</a>
+            <a href="404.html" onclick="switchFormTab('signin'); return false;" class="font-semibold text-blue-600 hover:underline">Forgot Password?</a>
           </div>
 
           <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm py-3.5 rounded-xl shadow-lg transition transform hover:scale-[1.01]">
@@ -131,18 +131,7 @@
           </button>
         </form>
 
-        <!-- Quick Demo Login Buttons -->
-        <div class="pt-4 border-t border-slate-100 space-y-2">
-          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 text-center">Quick Demo Autofill</p>
-          <div class="grid grid-cols-2 gap-3 text-xs">
-            <button onclick="autofillDemo('client@store.com', 'client')" class="py-2.5 px-3 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold rounded-xl border border-blue-200 transition text-center">
-              Demo Client
-            </button>
-            <button onclick="autofillDemo('admin@store.com', 'admin')" class="py-2.5 px-3 bg-red-50 hover:bg-red-100 text-red-700 font-semibold rounded-xl border border-red-200 transition text-center">
-              Demo Admin
-            </button>
-          </div>
-        </div>
+       
       </div>
 
       <!-- TAB 2: REGISTER CONTENT -->
@@ -174,6 +163,8 @@
               <input type="password" id="reg-confirm-password" placeholder="Confirm Password" required class="w-full px-4 py-3 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" />
             </div>
           </div>
+
+          <div id="reg-error-msg" class="hidden text-xs text-red-600 font-bold"></div>
 
           <div>
             <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Account Role</label>
@@ -257,28 +248,40 @@
     function autofillDemo(email, role) {
       selectRole(role);
       document.getElementById('login-email').value = email;
-      showToast(`Email submitted for ${role} demo: ${email}. Redirecting to 404 page...`, 400);
+      window.loginUser(email, role);
     }
 
     function handleFormSubmit(e) {
       e.preventDefault();
       const email = document.getElementById('login-email').value;
       const role = document.getElementById('selected-role').value;
-      if (window.showToast) {
-        showToast(`Sign in email submitted: ${email}. Redirecting to 404 page...`, 400);
-      } else {
-        window.location.href = '404.html';
-      }
+      window.loginUser(email, role);
     }
 
     function handleRegisterSubmit(e) {
       e.preventDefault();
       const email = document.getElementById('reg-email').value;
-      if (window.showToast) {
-        showToast(`Registration email submitted: ${email}. Redirecting to 404 page...`, 400);
-      } else {
-        window.location.href = '404.html';
+      const pass = document.getElementById('reg-password').value;
+      const confirmPass = document.getElementById('reg-confirm-password').value;
+      const errorEl = document.getElementById('reg-error-msg');
+
+      if (pass !== confirmPass) {
+        if (errorEl) {
+          errorEl.textContent = 'Passwords do not match! Please enter the same password.';
+          errorEl.classList.remove('hidden');
+        }
+        return false;
       }
+
+      if (errorEl) {
+        errorEl.classList.add('hidden');
+      }
+
+      if (email) {
+        document.getElementById('login-email').value = email;
+      }
+      switchFormTab('signin');
+      return false;
     }
   </script>
 </body>

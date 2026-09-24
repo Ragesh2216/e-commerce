@@ -52,7 +52,6 @@
         content.classList.remove('open');
         if (icon) icon.style.transform = 'rotate(0deg)';
       } else {
-        // close all other accordions
         document.querySelectorAll('.accordion-content').forEach(el => el.classList.remove('open'));
         document.querySelectorAll('.accordion-icon').forEach(el => el.style.transform = 'rotate(0deg)');
         content.classList.add('open');
@@ -61,27 +60,9 @@
     }
   };
 
-  // Toast Notification & Redirect to 404 Page
-  window.showToast = function (message, delay = 500) {
-    const container = document.getElementById('toast-container');
-    if (container) {
-      const toast = document.createElement('div');
-      toast.className = 'flex items-center bg-slate-900 text-white text-sm font-medium px-4 py-3 rounded-lg shadow-xl mb-3 space-x-2 transition-all duration-300 transform translate-y-2 opacity-0';
-      toast.innerHTML = `
-        <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-        <span>${message}</span>
-      `;
-      container.appendChild(toast);
-
-      setTimeout(() => {
-        toast.classList.remove('translate-y-2', 'opacity-0');
-      }, 50);
-    }
-
-    // Every pop message redirects to 404 page
-    setTimeout(() => {
-      window.location.href = '404.html';
-    }, delay);
+  // Toast Notification - Disabled per user request (no alert or popup messages on any pages)
+  window.showToast = function (message) {
+    // Silent execution - no alert/toast popup shown on any page
   };
 
   // Flash Sale Countdown Timer
@@ -112,7 +93,6 @@
   window.addToCart = function (title, price, imageSrc) {
     cartItems.push({ title, price, imageSrc, id: Date.now() });
     updateCartUI();
-    showToast(`Added "${title}" to your cart!`);
   };
 
   function updateCartUI() {

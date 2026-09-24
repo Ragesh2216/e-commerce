@@ -14,13 +14,19 @@
     };
   };
 
-  // Perform Login / Register - After email given move to 404 page
+  // Perform Login - Move to respective dashboard page
   window.loginUser = function (email, role) {
-    if (email) {
-      localStorage.setItem(AUTH_KEY_EMAIL, email);
-      localStorage.setItem(AUTH_KEY_ROLE, role || 'client');
+    if (!email) {
+      email = (role === 'admin') ? 'admin@store.com' : 'client@store.com';
     }
-    window.location.href = '404.html';
+    localStorage.setItem(AUTH_KEY_EMAIL, email);
+    localStorage.setItem(AUTH_KEY_ROLE, role || 'client');
+
+    if (role === 'admin') {
+      window.location.href = 'admin-dashboard.html';
+    } else {
+      window.location.href = 'client-dashboard.html';
+    }
     return true;
   };
 
@@ -50,7 +56,6 @@
     if (navAuthContainer) {
       if (session.isLoggedIn) {
         const dashboardUrl = session.role === 'admin' ? 'admin-dashboard.html' : 'client-dashboard.html';
-        const roleLabel = session.role === 'admin' ? 'Admin Panel' : 'My Account';
         navAuthContainer.innerHTML = `
           <div class="flex items-center space-x-3">
             <a href="${dashboardUrl}" class="flex items-center text-xs sm:text-sm font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg border border-blue-200 transition">
@@ -76,7 +81,6 @@
   window.checkDashboardAccess = function (requiredRole) {
     const session = window.getUserSession();
     if (!session.isLoggedIn) {
-      // Set default demo session if none exists
       if (requiredRole === 'admin') {
         localStorage.setItem(AUTH_KEY_EMAIL, 'admin@store.com');
         localStorage.setItem(AUTH_KEY_ROLE, 'admin');
