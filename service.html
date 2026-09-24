@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Services | NexusCommerce</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen">
+
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col pointer-events-none"></div>
+
+  <!-- SECTION 1: Navigation Header -->
+  <header class="sticky top-0 z-40 w-full nav-glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        <a href="index.html" class="flex items-center">
+          <img src="logo_0978.webp" alt="NexusStore Logo" class="h-10 sm:h-12 w-auto object-contain" />
+        </a>
+        <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
+          <a href="index.html" class="text-slate-600 hover:text-blue-600 transition">Home</a>
+          <a href="about.html" class="text-slate-600 hover:text-blue-600 transition">About</a>
+          <a href="service.html" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-1">Service</a>
+          <a href="blog.html" class="text-slate-600 hover:text-blue-600 transition">Blog</a>
+          <a href="contact.html" class="text-slate-600 hover:text-blue-600 transition">Contact</a>
+        </nav>
+        <div class="flex items-center space-x-3">
+          <div id="nav-auth-container" class="hidden md:block">
+            <a href="login.html" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs sm:text-sm px-4 py-2 rounded-lg transition shadow-sm">Sign In</a>
+          </div>
+          <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-700 hover:text-blue-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobile-menu-overlay" onclick="toggleMobileMenu()" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50"></div>
+  <div id="mobile-menu-drawer" class="fixed top-0 left-0 w-72 h-full bg-white z-50 transform -translate-x-full transition-transform duration-300 shadow-2xl flex flex-col justify-between">
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-8">
+        <a href="index.html" class="flex items-center">
+          <img src="logo_0978.webp" alt="NexusStore Logo" class="h-8 sm:h-10 w-auto object-contain" />
+        </a>
+        <button onclick="toggleMobileMenu()" class="p-1 text-slate-500 hover:text-slate-800">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <nav class="flex flex-col space-y-4 font-semibold text-slate-700">
+        <a href="index.html" class="hover:text-blue-600 py-2 border-b border-slate-100">Home</a>
+        <a href="about.html" class="hover:text-blue-600 py-2 border-b border-slate-100">About Us</a>
+        <a href="service.html" class="text-blue-600 font-bold py-2 border-b border-slate-100">Services</a>
+        <a href="blog.html" class="hover:text-blue-600 py-2 border-b border-slate-100">Blog & News</a>
+        <a href="contact.html" class="hover:text-blue-600 py-2 border-b border-slate-100">Contact Us</a>
+        <a href="login.html" class="hover:text-blue-600 py-2 border-b border-slate-100">Account Login</a>
+      </nav>
+    </div>
+    <div class="p-6 border-t border-slate-100 bg-slate-50 text-xs text-slate-500 text-center space-y-3">
+      <div class="flex items-center justify-center space-x-3">
+        <a href="404.html" aria-label="Facebook" class="w-8 h-8 rounded-lg bg-slate-200 hover:bg-blue-600 text-slate-600 hover:text-white flex items-center justify-center transition"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+        <a href="404.html" aria-label="Twitter" class="w-8 h-8 rounded-lg bg-slate-200 hover:bg-sky-500 text-slate-600 hover:text-white flex items-center justify-center transition"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="404.html" aria-label="Instagram" class="w-8 h-8 rounded-lg bg-slate-200 hover:bg-pink-600 text-slate-600 hover:text-white flex items-center justify-center transition"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+      </div>
+      <p>&copy; 2026 NexusStore Inc.</p>
+    </div>
+  </div>
+
+  <main class="flex-grow">
+
+    <!-- SECTION 2: Service Hero Banner -->
+    <section class="relative bg-slate-900 text-white py-16 sm:py-24 overflow-hidden">
+      <div class="absolute inset-0 opacity-40">
+        <img src="assets/images/service-hero.webp" alt="Service Hero WebP" class="w-full h-full object-cover" />
+      </div>
+      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+        <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest bg-emerald-500/20 px-3 py-1 rounded-full border border-emerald-400/30">
+          Customer & Enterprise Solutions
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-black tracking-tight">World-Class E-Commerce Services</h1>
+        <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">
+          From express global logistics to custom gifting and corporate bulk procurement, we deliver solutions tailored to your needs.
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Express Global Logistics & Shipping -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div class="space-y-4">
+            <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xl">ðŸšš</div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Worldwide Express Logistics</h2>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              We partner with global courier leaders (FedEx, DHL, UPS) to ensure guaranteed 2-day delivery across major metropolitan regions.
+            </p>
+            <ul class="space-y-2 text-xs text-slate-700 font-semibold">
+              <li class="flex items-center"><span class="text-emerald-500 mr-2">âœ“</span> Real-Time GPS Package Tracking</li>
+              <li class="flex items-center"><span class="text-emerald-500 mr-2">âœ“</span> Full Loss & Damage Transit Insurance</li>
+              <li class="flex items-center"><span class="text-emerald-500 mr-2">âœ“</span> Zero Customs Delays Handling</li>
+            </ul>
+          </div>
+          <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+            <h3 class="text-base font-bold text-slate-900 mb-4">Track Your Delivery Package</h3>
+            <form onsubmit="event.preventDefault(); showToast('Tracking status: In Transit (Estimated delivery tomorrow)');" class="space-y-3">
+              <input type="text" placeholder="Enter Order ID or Tracking Number (e.g., NEX-8842)" required class="w-full px-4 py-3 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+              <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-3 rounded-xl transition shadow">Check Status</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Custom Gift Packaging -->
+    <section class="py-16 bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div class="order-2 md:order-1 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center">
+            <div class="text-5xl mb-4">ðŸŽ</div>
+            <h3 class="text-lg font-bold text-slate-900">Personalized Ribbon Box</h3>
+            <p class="text-xs text-slate-500 mt-2">Available during checkout for only $4.99 per item.</p>
+          </div>
+          <div class="order-1 md:order-2 space-y-4">
+            <div class="w-12 h-12 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center font-bold text-xl">ðŸŽ€</div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Custom Packaging & Gift Wrapping</h2>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              Sending a surprise gift to a friend or colleague? Add custom engraved cards, premium silk ribbon boxes, and unbranded gift receipts directly at checkout.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: Easy 30-Day Returns Policy -->
+    <section class="py-16 bg-white border-y border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-xl mx-auto mb-12">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">3-Step Easy Return Process</h2>
+          <p class="text-slate-500 text-sm mt-1">If you are not 100% satisfied, returns are effortless</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center">
+            <span class="w-10 h-10 rounded-full bg-blue-600 text-white font-bold inline-flex items-center justify-center mb-4">1</span>
+            <h3 class="text-base font-bold text-slate-900">Submit Request</h3>
+            <p class="text-xs text-slate-500 mt-2">Log into your Client Dashboard and click "Request Return" on your order.</p>
+          </div>
+          <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center">
+            <span class="w-10 h-10 rounded-full bg-blue-600 text-white font-bold inline-flex items-center justify-center mb-4">2</span>
+            <h3 class="text-base font-bold text-slate-900">Print Shipping Label</h3>
+            <p class="text-xs text-slate-500 mt-2">Download your prepaid QR shipping label and attach it to the package.</p>
+          </div>
+          <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center">
+            <span class="w-10 h-10 rounded-full bg-blue-600 text-white font-bold inline-flex items-center justify-center mb-4">3</span>
+            <h3 class="text-base font-bold text-slate-900">Instant Refund</h3>
+            <p class="text-xs text-slate-500 mt-2">Once scanned at drop-off, your refund is processed back to your original payment card.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: 24/7 VIP Customer Support -->
+    <section class="py-16 bg-slate-900 text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="space-y-4 max-w-xl text-center md:text-left">
+          <span class="text-xs font-bold text-amber-400 uppercase tracking-widest bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">
+            Round-The-Clock Assistance
+          </span>
+          <h2 class="text-2xl sm:text-4xl font-black">Need Help With Your Order?</h2>
+          <p class="text-slate-300 text-sm">Our support specialists are online 24 hours a day to answer product questions or handle order updates.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+          <a href="contact.html" class="px-6 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm rounded-xl text-center shadow-lg transition">Start Live Chat</a>
+          <a href="tel:+18005550199" class="px-6 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs sm:text-sm rounded-xl border border-slate-700 text-center transition">Call +1 (800) 555-0199</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: Wholesale & B2B Solutions -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-gradient-to-r from-slate-900 to-indigo-950 rounded-3xl p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-8">
+          <div class="space-y-4 max-w-xl">
+            <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Enterprise Accounts</span>
+            <h2 class="text-2xl sm:text-3xl font-black">Wholesale & Bulk Ordering</h2>
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+              Equipping a corporate office or buying in volume? Apply for a wholesale account to unlock tiered pricing discounts up to 35% off retail rates.
+            </p>
+          </div>
+          <a href="contact.html" class="px-8 py-3.5 bg-white text-slate-900 hover:bg-slate-100 font-extrabold text-xs sm:text-sm rounded-xl shadow-lg transition shrink-0">
+            Apply for Corporate Account
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: Service FAQ Accordion & Footer -->
+    <section class="py-16 bg-slate-50 border-t border-slate-200">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Frequently Asked Questions</h2>
+          <p class="text-slate-500 text-sm mt-1">Quick answers to key shipping and warranty questions</p>
+        </div>
+
+        <div class="space-y-4">
+          <!-- Accordion Item 1 -->
+          <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+            <button onclick="toggleAccordion(1)" class="w-full p-4 text-left font-bold text-slate-900 text-sm flex justify-between items-center">
+              <span>How fast will my order ship out?</span>
+              <svg id="accordion-icon-1" class="w-5 h-5 text-slate-500 accordion-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div id="accordion-content-1" class="accordion-content px-4 pb-4 text-xs text-slate-600 leading-relaxed">
+              All orders placed before 2:00 PM EST are processed and handed to courier partners on the same business day.
+            </div>
+          </div>
+
+          <!-- Accordion Item 2 -->
+          <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+            <button onclick="toggleAccordion(2)" class="w-full p-4 text-left font-bold text-slate-900 text-sm flex justify-between items-center">
+              <span>What is your international warranty policy?</span>
+              <svg id="accordion-icon-2" class="w-5 h-5 text-slate-500 accordion-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div id="accordion-content-2" class="accordion-content px-4 pb-4 text-xs text-slate-600 leading-relaxed">
+              All electronics and hardware products include a 1-Year Comprehensive Manufacturer Warranty covering mechanical or electrical defects.
+            </div>
+          </div>
+
+          <!-- Accordion Item 3 -->
+          <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+            <button onclick="toggleAccordion(3)" class="w-full p-4 text-left font-bold text-slate-900 text-sm flex justify-between items-center">
+              <span>Can I change or cancel my order after placing it?</span>
+              <svg id="accordion-icon-3" class="w-5 h-5 text-slate-500 accordion-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div id="accordion-content-3" class="accordion-content px-4 pb-4 text-xs text-slate-600 leading-relaxed">
+              Yes! You can modify your shipping address or cancel your order within 60 minutes of placing it directly from your Client Dashboard.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-white pt-16 pb-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Newsletter Callout Card -->
+        <div class="bg-gradient-to-r from-blue-900 to-indigo-900 rounded-3xl p-8 sm:p-12 mb-16 border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
+          <div class="max-w-xl text-center md:text-left">
+            <h3 class="text-2xl sm:text-3xl font-black text-white">Join the Nexus VIP Club</h3>
+            <p class="text-slate-300 text-xs sm:text-sm mt-2">Subscribe to receive exclusive discount drops, new product launches, and weekly tech guides directly to your inbox.</p>
+          </div>
+          <form onsubmit="event.preventDefault(); showToast('Subscribed to VIP newsletter!');" class="w-full md:w-auto flex flex-col sm:flex-row gap-3">
+            <input type="email" placeholder="Enter your email address..." required class="px-5 py-3.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500 w-full sm:w-80" />
+            <button type="submit" class="px-6 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm rounded-xl transition shadow-lg shrink-0">Subscribe Now</button>
+          </form>
+        </div>
+
+        <!-- Footer Links Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-8 pb-12 border-b border-slate-800 text-xs text-slate-400">
+          <div class="col-span-2">
+            <a href="index.html" class="flex items-center mb-4">
+              <img src="logo_0978.webp" alt="NexusStore Logo" class="h-9 sm:h-11 w-auto object-contain" />
+            </a>
+            <p class="text-slate-400 leading-relaxed max-w-sm mb-4">
+              Providing premium electronics, fashion, and ergonomic home office gear with 24/7 global shipping and 30-day money-back guarantee.
+            </p>
+            <p class="text-slate-500 mb-4">Contact: support@nexusstore.com | +1 (800) 555-0199</p>
+
+            <!-- Social Icons (Linking to 404 page) -->
+            <div class="flex items-center space-x-3">
+              <a href="404.html" aria-label="Facebook" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-blue-600 text-slate-400 hover:text-white flex items-center justify-center transition border border-slate-800"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+              <a href="404.html" aria-label="Twitter" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-sky-500 text-slate-400 hover:text-white flex items-center justify-center transition border border-slate-800"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+              <a href="404.html" aria-label="Instagram" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-pink-600 text-slate-400 hover:text-white flex items-center justify-center transition border border-slate-800"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+              <a href="404.html" aria-label="LinkedIn" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-blue-700 text-slate-400 hover:text-white flex items-center justify-center transition border border-slate-800"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+              <a href="404.html" aria-label="YouTube" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-red-600 text-slate-400 hover:text-white flex items-center justify-center transition border border-slate-800"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="text-sm font-bold text-white mb-4">Quick Pages</h4>
+            <ul class="space-y-2">
+              <li><a href="index.html" class="hover:text-blue-400 transition">Home</a></li>
+              <li><a href="about.html" class="hover:text-blue-400 transition">About Us</a></li>
+              <li><a href="service.html" class="hover:text-blue-400 transition">Services</a></li>
+              <li><a href="blog.html" class="hover:text-blue-400 transition">Blog & News</a></li>
+              <li><a href="contact.html" class="hover:text-blue-400 transition">Contact Us</a></li>
+              <li><a href="404.html" class="hover:text-blue-400 transition">404 Error Page</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-sm font-bold text-white mb-4">Customer Care</h4>
+            <ul class="space-y-2">
+              <li><a href="login.html" class="hover:text-blue-400 transition">User Login / Register</a></li>
+              <li><a href="404.html" class="hover:text-blue-400 transition">Help Center (404)</a></li>
+              <li><a href="404.html" class="hover:text-blue-400 transition">Order Tracking</a></li>
+              <li><a href="404.html" class="hover:text-blue-400 transition">Support Desk</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-sm font-bold text-white mb-4">Legal & Trust</h4>
+            <ul class="space-y-2">
+              <li><a href="service.html" class="hover:text-blue-400 transition">Privacy Policy</a></li>
+              <li><a href="service.html" class="hover:text-blue-400 transition">Terms of Service</a></li>
+              <li><a href="service.html" class="hover:text-blue-400 transition">Refund Guarantee</a></li>
+              <li><a href="contact.html" class="hover:text-blue-400 transition">Store Locations</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+          <p>&copy; 2026 NexusCommerce Inc. All rights reserved. WebP images &lt; 100KB certified.</p>
+          <div class="flex space-x-4 text-slate-400 font-semibold">
+            <span>VISA</span>
+            <span>MasterCard</span>
+            <span>PayPal</span>
+            <span>Apple Pay</span>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

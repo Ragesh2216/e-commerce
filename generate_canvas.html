@@ -1,0 +1,94 @@
+$genHtml = @"
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body>
+<div id="output"></div>
+<script>
+const imagesToGenerate = [
+  { name: 'hero-banner.webp', width: 1200, height: 600, title: 'Summer Tech & Fashion Mega Sale', sub: 'Up to 50% Off Top Brands', bg1: '#3b82f6', bg2: '#1d4ed8' },
+  { name: 'promo-banner.webp', width: 1200, height: 400, title: 'Limited Time Exclusive Deal', sub: 'Use Code: ECOM2026 for $50 Off', bg1: '#8b5cf6', bg2: '#6d28d9' },
+  { name: 'category-electronics.webp', width: 600, height: 400, title: 'Next-Gen Electronics', sub: 'Smartphones, Audio & Laptops', bg1: '#0284c7', bg2: '#0369a1' },
+  { name: 'category-fashion.webp', width: 600, height: 400, title: 'Trending Fashion & Apparel', sub: 'Urban Styles & Accessories', bg1: '#ec4899', bg2: '#be185d' },
+  { name: 'category-home.webp', width: 600, height: 400, title: 'Modern Home & Living', sub: 'Furniture, Decor & Lighting', bg1: '#10b981', bg2: '#047857' },
+  { name: 'category-sports.webp', width: 600, height: 400, title: 'Fitness & Outdoor Gear', sub: 'Activewear, Shoes & Equipment', bg1: '#f59e0b', bg2: '#b45309' },
+  { name: 'product-1.webp', width: 500, height: 500, title: 'Wireless Pro Headphones', sub: '$199.99 - Active Noise Canceling', bg1: '#6366f1', bg2: '#4338ca' },
+  { name: 'product-2.webp', width: 500, height: 500, title: 'Smart Fitness Watch V2', sub: '$149.99 - Heart & Sleep Tracking', bg1: '#06b6d4', bg2: '#0e7490' },
+  { name: 'product-3.webp', width: 500, height: 500, title: 'Ergonomic Executive Chair', sub: '$289.99 - Lumbar Support', bg1: '#14b8a6', bg2: '#0f766e' },
+  { name: 'product-4.webp', width: 500, height: 500, title: '4K Ultra HD Drone Camera', sub: '$499.99 - 3-Axis Gimbal', bg1: '#8b5cf6', bg2: '#7c3aed' },
+  { name: 'product-5.webp', width: 500, height: 500, title: 'Minimalist Leather Backpack', sub: '$89.99 - Water-Resistant', bg1: '#f97316', bg2: '#c2410c' },
+  { name: 'product-6.webp', width: 500, height: 500, title: 'Mechanical RGB Keyboard', sub: '$119.99 - Custom Tactile Switches', bg1: '#ec4899', bg2: '#a21caf' },
+  { name: 'blog-1.webp', width: 800, height: 500, title: 'Top 10 E-Commerce Trends 2026', sub: 'Future of Online Shopping', bg1: '#3b82f6', bg2: '#1e40af' },
+  { name: 'blog-2.webp', width: 800, height: 500, title: 'How to Choose Ergonomic Gear', sub: 'Workplace Wellness Guide', bg1: '#10b981', bg2: '#065f46' },
+  { name: 'blog-3.webp', width: 800, height: 500, title: 'Smart Home Buying Checklist', sub: 'Automating Your Living Space', bg1: '#8b5cf6', bg2: '#5b21b6' },
+  { name: 'about-story.webp', width: 900, height: 600, title: 'Our Global Journey & Vision', sub: 'Serving 100,000+ Happy Customers Worldwide', bg1: '#6366f1', bg2: '#3730a3' },
+  { name: 'team-1.webp', width: 400, height: 400, title: 'Alex Morgan', sub: 'Chief Executive Officer', bg1: '#0284c7', bg2: '#075985' },
+  { name: 'team-2.webp', width: 400, height: 400, title: 'Sarah Chen', sub: 'Head of Product Design', bg1: '#db2777', bg2: '#9d174d' },
+  { name: 'service-hero.webp', width: 1200, height: 500, title: 'Premium E-Commerce Logistics & Support', sub: '24/7 Global Express Delivery', bg1: '#2563eb', bg2: '#1e3a8a' },
+  { name: 'contact-hero.webp', width: 1200, height: 500, title: 'We are Here to Help 24/7', sub: 'Get Instant Support & Order Guidance', bg1: '#0d9488', bg2: '#115e59' },
+  { name: 'client-avatar.webp', width: 300, height: 300, title: 'Client Account', sub: 'Verified Shopper Profile', bg1: '#3b82f6', bg2: '#1d4ed8' },
+  { name: 'admin-avatar.webp', width: 300, height: 300, title: 'Admin Master', sub: 'Store Administrator Profile', bg1: '#ef4444', bg2: '#991b1b' }
+];
+
+window.onload = function() {
+  const container = document.getElementById('output');
+  imagesToGenerate.forEach(img => {
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    
+    // Gradient Background
+    const grad = ctx.createLinearGradient(0, 0, img.width, img.height);
+    grad.addColorStop(0, img.bg1);
+    grad.addColorStop(1, img.bg2);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, img.width, img.height);
+    
+    // Decorative grid/circles
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.beginPath();
+    ctx.arc(img.width * 0.85, img.height * 0.2, img.height * 0.4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(img.width * 0.15, img.height * 0.8, img.height * 0.3, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Subtle inner border
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+    ctx.lineWidth = 8;
+    ctx.strokeRect(16, 16, img.width - 32, img.height - 32);
+
+    // Title Text
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = `bold ${Math.max(18, Math.floor(img.height / 12))}px sans-serif`;
+    ctx.fillText(img.title, img.width / 2, img.height / 2 - 15);
+    
+    // Subtitle Text
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+    ctx.font = `${Math.max(12, Math.floor(img.height / 20))}px sans-serif`;
+    ctx.fillText(img.sub, img.width / 2, img.height / 2 + 25);
+    
+    // Badge / Watermark
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+    ctx.fillRect(24, img.height - 50, 160, 30);
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'left';
+    ctx.font = 'bold 12px sans-serif';
+    ctx.fillText('E-COMMERCE WEBP', 34, img.height - 35);
+
+    const webpUrl = canvas.toDataURL('image/webp', 0.8);
+    const div = document.createElement('div');
+    div.className = 'img-data';
+    div.setAttribute('data-filename', img.name);
+    div.innerText = webpUrl;
+    container.appendChild(div);
+  });
+};
+</script>
+</body>
+</html>
+"@
+$genHtml | Out-File -FilePath 'c:\Users\ADMIN\Desktop\e-commerce\generate_canvas.html' -Encoding utf8

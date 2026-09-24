@@ -1,0 +1,811 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexusCommerce | Modern Online Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen">
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col pointer-events-none"></div>
+
+  <!-- SECTION 1: Top Announcement Bar & Main Navigation Header -->
+  <header class="sticky top-0 z-40 w-full nav-glass">
+    <!-- Announcement Bar -->
+    <div class="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 text-white text-xs font-semibold py-2 px-4 text-center">
+      <span>ðŸŽ‰ FLASH SALE: Get 20% OFF on all Tech & Fashion items! Use Code: <strong class="underline decoration-amber-300 underline-offset-2">NEXUS2026</strong></span>
+    </div>
+    
+    <!-- Navbar Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        
+        <!-- Brand Logo -->
+        <a href="index.html" class="flex items-center">
+          <img src="logo_0978.webp" alt="NexusStore Logo" class="h-10 sm:h-12 w-auto object-contain" />
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
+          <a href="index.html" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-1">Home</a>
+          <a href="about.html" class="text-slate-600 hover:text-blue-600 transition">About</a>
+          <a href="service.html" class="text-slate-600 hover:text-blue-600 transition">Service</a>
+          <a href="blog.html" class="text-slate-600 hover:text-blue-600 transition">Blog</a>
+          <a href="contact.html" class="text-slate-600 hover:text-blue-600 transition">Contact</a>
+        </nav>
+
+        <!-- Right Side Actions & Cart (Hidden on mobile navbar so only logo & toggle menu show) -->
+        <div class="flex items-center space-x-3 sm:space-x-4">
+          <!-- Cart Icon (Desktop Only) -->
+          <button onclick="toggleCartDrawer()" class="hidden md:flex relative p-2 text-slate-600 hover:text-blue-600 transition" aria-label="Shopping Cart">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            <span id="cart-count-badge" class="absolute -top-1 -right-1 bg-blue-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow">0</span>
+          </button>
+
+          <!-- Auth Account Button (Desktop Only) -->
+          <div id="nav-auth-container" class="hidden md:block">
+            <a href="login.html" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs sm:text-sm px-4 py-2 rounded-lg transition shadow-sm">
+              Sign In
+            </a>
+          </div>
+
+          <!-- Mobile Hamburger Menu Button -->
+          <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-700 hover:text-blue-600" aria-label="Toggle Navigation Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu Overlay -->
+  <div id="mobile-menu-overlay" onclick="toggleMobileMenu()" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50"></div>
+  <div id="mobile-menu-drawer" class="fixed top-0 left-0 w-72 h-full bg-white z-50 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl flex flex-col justify-between">
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-8">
+        <a href="index.html" class="flex items-center">
+          <img src="logo_0978.webp" alt="NexusStore Logo" class="h-8 sm:h-10 w-auto object-contain" />
+        </a>
+        <button onclick="toggleMobileMenu()" class="p-1 text-slate-500 hover:text-slate-800">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <nav class="flex flex-col space-y-4 font-semibold text-slate-700">
+        <a href="index.html" class="text-blue-600 font-bold py-2 border-b border-slate-100">Home</a>
+        <a href="about.html" class="hover:text-blue-600 py-2 border-b border-slate-100">About Us</a>
+        <a href="service.html" class="hover:text-blue-600 py-2 border-b border-slate-100">Services</a>
+        <a href="blog.html" class="hover:text-blue-600 py-2 border-b border-slate-100">Blog & News</a>
+        <a href="contact.html" class="hover:text-blue-600 py-2 border-b border-slate-100">Contact Us</a>
+        <a href="login.html" class="hover:text-blue-600 py-2 border-b border-slate-100">Account Login / Register</a>
+      </nav>
+    </div>
+    <div class="p-6 border-t border-slate-100 bg-slate-50 text-xs text-slate-500 text-center space-y-3">
+      <div class="flex items-center justify-center space-x-3">
+        <a href="404.html" aria-label="Facebook" class="w-8 h-8 rounded-lg bg-slate-200 hover:bg-blue-600 text-slate-600 hover:text-white flex items-center justify-center transition"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+        <a href="404.html" aria-label="Twitter" class="w-8 h-8 rounded-lg bg-slate-200 hover:bg-sky-500 text-slate-600 hover:text-white flex items-center justify-center transition"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="404.html" aria-label="Instagram" class="w-8 h-8 rounded-lg bg-slate-200 hover:bg-pink-600 text-slate-600 hover:text-white flex items-center justify-center transition"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+      </div>
+      <p>&copy; 2026 NexusStore Inc.</p>
+    </div>
+  </div>
+
+  <!-- Cart Drawer Overlay -->
+  <div id="cart-overlay" onclick="toggleCartDrawer()" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50"></div>
+  <div id="cart-drawer" class="fixed top-0 right-0 w-80 sm:w-96 h-full bg-white z-50 transform translate-x-full transition-transform duration-300 ease-in-out shadow-2xl flex flex-col justify-between">
+    <div class="p-6 border-b border-slate-100 flex items-center justify-between">
+      <h3 class="text-lg font-bold text-slate-900">Your Shopping Cart</h3>
+      <button onclick="toggleCartDrawer()" class="text-slate-400 hover:text-slate-700">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+    </div>
+    <div id="cart-drawer-list" class="p-6 flex-1 overflow-y-auto space-y-4">
+      <!-- Dynamic Cart Items -->
+    </div>
+    <div class="p-6 border-t border-slate-100 bg-slate-50">
+      <div class="flex justify-between items-center mb-4">
+        <span class="text-sm font-semibold text-slate-600">Subtotal:</span>
+        <span id="cart-drawer-total" class="text-xl font-bold text-slate-900">$0.00</span>
+      </div>
+      <a href="login.html" class="block text-center w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow-md transition">Proceed to Checkout</a>
+    </div>
+  </div>
+
+  <main class="flex-grow">
+    
+    <!-- SECTION 2: Hero Banner & Carousel -->
+    <section class="relative bg-slate-900 text-white py-16 sm:py-24 overflow-hidden">
+      <div class="absolute inset-0 opacity-40">
+        <img src="assets/images/hero-banner.webp" alt="Hero Banner" class="w-full h-full object-cover" />
+      </div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="md:w-1/2 space-y-6 text-center md:text-left">
+          <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-bold rounded-full border border-blue-400/30 uppercase tracking-widest">
+            New Collection 2026
+          </span>
+          <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+            Discover Future-Grade Tech & Lifestyle Gear
+          </h1>
+          <p class="text-slate-300 text-sm sm:text-base max-w-lg">
+            Upgrade your daily stack with premium accessories, ergonomic office gear, and smart electronics engineered for speed and elegance.
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
+            <a href="#trending-section" class="w-full sm:w-auto px-8 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm rounded-xl shadow-lg transition text-center">
+              Explore Products
+            </a>
+            <a href="service.html" class="w-full sm:w-auto px-8 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-sm rounded-xl border border-slate-700 transition text-center">
+              Our Guarantees
+            </a>
+          </div>
+        </div>
+        <div class="md:w-1/2 w-full max-w-md">
+          <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50 bg-slate-800/80 p-2">
+            <img src="assets/images/hero-banner.webp" alt="Hero Featured Product" class="w-full h-64 sm:h-80 object-cover rounded-xl" />
+            <div class="p-4 flex items-center justify-between bg-slate-900/90 rounded-xl mt-2 border border-slate-700">
+              <div>
+                <h4 class="text-sm font-bold text-white">Featured Choice: Wireless Pro</h4>
+                <p class="text-xs text-slate-400">Noise-Canceling & 40h Battery</p>
+              </div>
+              <span class="text-lg font-black text-amber-400">$199.99</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Category Grid Showcase -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Browse Popular Categories</h2>
+          <p class="text-slate-500 text-sm mt-2">Curated collections designed to power your lifestyle and work</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Category Card 1 -->
+          <a href="#trending-section" class="group relative rounded-2xl overflow-hidden shadow-sm card-hover h-64 border border-slate-100">
+            <img src="assets/images/category-electronics.webp" alt="Electronics" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent flex flex-col justify-end p-6">
+              <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition">Electronics</h3>
+              <p class="text-xs text-slate-300 mt-1">120+ Products Available</p>
+            </div>
+          </a>
+
+          <!-- Category Card 2 -->
+          <a href="#trending-section" class="group relative rounded-2xl overflow-hidden shadow-sm card-hover h-64 border border-slate-100">
+            <img src="assets/images/category-fashion.webp" alt="Fashion" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent flex flex-col justify-end p-6">
+              <h3 class="text-xl font-bold text-white group-hover:text-pink-400 transition">Fashion & Apparel</h3>
+              <p class="text-xs text-slate-300 mt-1">250+ Apparel Items</p>
+            </div>
+          </a>
+
+          <!-- Category Card 3 -->
+          <a href="#trending-section" class="group relative rounded-2xl overflow-hidden shadow-sm card-hover h-64 border border-slate-100">
+            <img src="assets/images/category-home.webp" alt="Home & Living" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent flex flex-col justify-end p-6">
+              <h3 class="text-xl font-bold text-white group-hover:text-emerald-400 transition">Home & Living</h3>
+              <p class="text-xs text-slate-300 mt-1">85+ Office Essentials</p>
+            </div>
+          </a>
+
+          <!-- Category Card 4 -->
+          <a href="#trending-section" class="group relative rounded-2xl overflow-hidden shadow-sm card-hover h-64 border border-slate-100">
+            <img src="assets/images/category-sports.webp" alt="Fitness & Outdoors" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent flex flex-col justify-end p-6">
+              <h3 class="text-xl font-bold text-white group-hover:text-amber-400 transition">Fitness & Outdoors</h3>
+              <p class="text-xs text-slate-300 mt-1">60+ Active Devices</p>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Flash Sales & Live Countdown -->
+    <section class="py-16 bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-900 text-white relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row items-center justify-between mb-10 gap-6">
+          <div>
+            <div class="inline-flex items-center space-x-2 bg-red-500/20 text-red-400 text-xs font-bold px-3 py-1 rounded-full border border-red-500/30 mb-2">
+              <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+              <span>LIVE FLASH DEAL</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black">Hurry! Deals Expire Soon</h2>
+          </div>
+
+          <!-- Countdown Timer Display -->
+          <div class="flex items-center space-x-3 text-center">
+            <div class="bg-slate-800/90 border border-slate-700 px-4 py-2 rounded-xl">
+              <span id="cd-hours" class="text-2xl font-black text-amber-400">14</span>
+              <span class="block text-[10px] text-slate-400 uppercase font-semibold">Hours</span>
+            </div>
+            <span class="text-2xl font-bold text-slate-500">:</span>
+            <div class="bg-slate-800/90 border border-slate-700 px-4 py-2 rounded-xl">
+              <span id="cd-mins" class="text-2xl font-black text-amber-400">45</span>
+              <span class="block text-[10px] text-slate-400 uppercase font-semibold">Mins</span>
+            </div>
+            <span class="text-2xl font-bold text-slate-500">:</span>
+            <div class="bg-slate-800/90 border border-slate-700 px-4 py-2 rounded-xl">
+              <span id="cd-secs" class="text-2xl font-black text-amber-400">30</span>
+              <span class="block text-[10px] text-slate-400 uppercase font-semibold">Secs</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flash Items Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          
+          <div class="bg-slate-800/80 rounded-2xl p-4 border border-slate-700 flex items-center space-x-4">
+            <img src="assets/images/product-1.webp" alt="Wireless Pro Headphones" class="w-24 h-24 object-cover rounded-xl bg-slate-900" />
+            <div class="flex-1">
+              <span class="text-[10px] font-bold text-red-400 bg-red-500/10 px-2 py-0.5 rounded">SAVE $50</span>
+              <h4 class="text-sm font-bold text-white mt-1">Wireless Pro Headphones</h4>
+              <div class="flex items-center space-x-2 mt-2">
+                <span class="text-lg font-black text-amber-400">$199.99</span>
+                <span class="text-xs text-slate-500 line-through">$249.99</span>
+              </div>
+              <button onclick="addToCart('Wireless Pro Headphones', '$199.99', 'assets/images/product-1.webp')" class="mt-3 w-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2 rounded-lg transition">Claim Deal</button>
+            </div>
+          </div>
+
+          <div class="bg-slate-800/80 rounded-2xl p-4 border border-slate-700 flex items-center space-x-4">
+            <img src="assets/images/product-2.webp" alt="Smart Fitness Watch V2" class="w-24 h-24 object-cover rounded-xl bg-slate-900" />
+            <div class="flex-1">
+              <span class="text-[10px] font-bold text-red-400 bg-red-500/10 px-2 py-0.5 rounded">SAVE $40</span>
+              <h4 class="text-sm font-bold text-white mt-1">Smart Fitness Watch V2</h4>
+              <div class="flex items-center space-x-2 mt-2">
+                <span class="text-lg font-black text-amber-400">$149.99</span>
+                <span class="text-xs text-slate-500 line-through">$189.99</span>
+              </div>
+              <button onclick="addToCart('Smart Fitness Watch V2', '$149.99', 'assets/images/product-2.webp')" class="mt-3 w-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2 rounded-lg transition">Claim Deal</button>
+            </div>
+          </div>
+
+          <div class="bg-slate-800/80 rounded-2xl p-4 border border-slate-700 flex items-center space-x-4 sm:col-span-2 md:col-span-1">
+            <img src="assets/images/product-4.webp" alt="4K Drone Camera" class="w-24 h-24 object-cover rounded-xl bg-slate-900" />
+            <div class="flex-1">
+              <span class="text-[10px] font-bold text-red-400 bg-red-500/10 px-2 py-0.5 rounded">SAVE $100</span>
+              <h4 class="text-sm font-bold text-white mt-1">4K Ultra HD Drone</h4>
+              <div class="flex items-center space-x-2 mt-2">
+                <span class="text-lg font-black text-amber-400">$499.99</span>
+                <span class="text-xs text-slate-500 line-through">$599.99</span>
+              </div>
+              <button onclick="addToCart('4K Ultra HD Drone', '$499.99', 'assets/images/product-4.webp')" class="mt-3 w-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2 rounded-lg transition">Claim Deal</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: Top Trending Products Grid -->
+    <section id="trending-section" class="py-16 bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Trending Right Now</h2>
+            <p class="text-slate-500 text-sm mt-1">High-demand products with top customer ratings</p>
+          </div>
+          <!-- Filter Tags -->
+          <div class="flex flex-wrap gap-2 text-xs font-semibold">
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-sm">All Items</button>
+            <button class="px-4 py-2 bg-white text-slate-600 hover:bg-slate-100 rounded-lg border border-slate-200">Electronics</button>
+            <button class="px-4 py-2 bg-white text-slate-600 hover:bg-slate-100 rounded-lg border border-slate-200">Furniture</button>
+            <button class="px-4 py-2 bg-white text-slate-600 hover:bg-slate-100 rounded-lg border border-slate-200">Accessories</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+          
+          <!-- Product Card 1 -->
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover border border-slate-200 flex flex-col justify-between">
+            <div class="relative h-56 bg-slate-100 overflow-hidden">
+              <img src="assets/images/product-1.webp" alt="Wireless Pro Headphones" class="w-full h-full object-cover" />
+              <span class="absolute top-3 left-3 bg-blue-600 text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow">BESTSELLER</span>
+              <button onclick="openQuickView('Wireless Pro Headphones', '$199.99', 'assets/images/product-1.webp')" class="absolute bottom-3 right-3 bg-white/90 hover:bg-white text-slate-800 text-xs font-bold px-3 py-1.5 rounded-lg shadow backdrop-blur transition">Quick View</button>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-blue-600">Audio & Gear</span>
+                <h3 class="text-base font-bold text-slate-900 mt-1">Wireless Pro Headphones</h3>
+                <div class="flex items-center space-x-1 mt-2">
+                  <span class="text-amber-400">â˜…â˜…â˜…â˜…â˜…</span>
+                  <span class="text-xs text-slate-500 font-semibold">(142 reviews)</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between mt-6 pt-4 border-t border-slate-100">
+                <span class="text-xl font-extrabold text-slate-900">$199.99</span>
+                <button onclick="addToCart('Wireless Pro Headphones', '$199.99', 'assets/images/product-1.webp')" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card 2 -->
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover border border-slate-200 flex flex-col justify-between">
+            <div class="relative h-56 bg-slate-100 overflow-hidden">
+              <img src="assets/images/product-2.webp" alt="Smart Fitness Watch V2" class="w-full h-full object-cover" />
+              <button onclick="openQuickView('Smart Fitness Watch V2', '$149.99', 'assets/images/product-2.webp')" class="absolute bottom-3 right-3 bg-white/90 hover:bg-white text-slate-800 text-xs font-bold px-3 py-1.5 rounded-lg shadow backdrop-blur transition">Quick View</button>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-blue-600">Wearables</span>
+                <h3 class="text-base font-bold text-slate-900 mt-1">Smart Fitness Watch V2</h3>
+                <div class="flex items-center space-x-1 mt-2">
+                  <span class="text-amber-400">â˜…â˜…â˜…â˜…â˜†</span>
+                  <span class="text-xs text-slate-500 font-semibold">(98 reviews)</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between mt-6 pt-4 border-t border-slate-100">
+                <span class="text-xl font-extrabold text-slate-900">$149.99</span>
+                <button onclick="addToCart('Smart Fitness Watch V2', '$149.99', 'assets/images/product-2.webp')" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card 3 -->
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover border border-slate-200 flex flex-col justify-between">
+            <div class="relative h-56 bg-slate-100 overflow-hidden">
+              <img src="assets/images/product-3.webp" alt="Ergonomic Executive Chair" class="w-full h-full object-cover" />
+              <span class="absolute top-3 left-3 bg-emerald-600 text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow">ECO-FRIENDLY</span>
+              <button onclick="openQuickView('Ergonomic Executive Chair', '$289.99', 'assets/images/product-3.webp')" class="absolute bottom-3 right-3 bg-white/90 hover:bg-white text-slate-800 text-xs font-bold px-3 py-1.5 rounded-lg shadow backdrop-blur transition">Quick View</button>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-blue-600">Furniture</span>
+                <h3 class="text-base font-bold text-slate-900 mt-1">Ergonomic Executive Chair</h3>
+                <div class="flex items-center space-x-1 mt-2">
+                  <span class="text-amber-400">â˜…â˜…â˜…â˜…â˜…</span>
+                  <span class="text-xs text-slate-500 font-semibold">(210 reviews)</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between mt-6 pt-4 border-t border-slate-100">
+                <span class="text-xl font-extrabold text-slate-900">$289.99</span>
+                <button onclick="addToCart('Ergonomic Executive Chair', '$289.99', 'assets/images/product-3.webp')" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card 4 -->
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover border border-slate-200 flex flex-col justify-between">
+            <div class="relative h-56 bg-slate-100 overflow-hidden">
+              <img src="assets/images/product-4.webp" alt="4K Ultra HD Drone Camera" class="w-full h-full object-cover" />
+              <button onclick="openQuickView('4K Ultra HD Drone Camera', '$499.99', 'assets/images/product-4.webp')" class="absolute bottom-3 right-3 bg-white/90 hover:bg-white text-slate-800 text-xs font-bold px-3 py-1.5 rounded-lg shadow backdrop-blur transition">Quick View</button>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-blue-600">Cameras & Drones</span>
+                <h3 class="text-base font-bold text-slate-900 mt-1">4K Ultra HD Drone Camera</h3>
+                <div class="flex items-center space-x-1 mt-2">
+                  <span class="text-amber-400">â˜…â˜…â˜…â˜…â˜…</span>
+                  <span class="text-xs text-slate-500 font-semibold">(85 reviews)</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between mt-6 pt-4 border-t border-slate-100">
+                <span class="text-xl font-extrabold text-slate-900">$499.99</span>
+                <button onclick="addToCart('4K Ultra HD Drone Camera', '$499.99', 'assets/images/product-4.webp')" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card 5 -->
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover border border-slate-200 flex flex-col justify-between">
+            <div class="relative h-56 bg-slate-100 overflow-hidden">
+              <img src="assets/images/product-5.webp" alt="Minimalist Leather Backpack" class="w-full h-full object-cover" />
+              <button onclick="openQuickView('Minimalist Leather Backpack', '$89.99', 'assets/images/product-5.webp')" class="absolute bottom-3 right-3 bg-white/90 hover:bg-white text-slate-800 text-xs font-bold px-3 py-1.5 rounded-lg shadow backdrop-blur transition">Quick View</button>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-blue-600">Fashion & Luggage</span>
+                <h3 class="text-base font-bold text-slate-900 mt-1">Minimalist Leather Backpack</h3>
+                <div class="flex items-center space-x-1 mt-2">
+                  <span class="text-amber-400">â˜…â˜…â˜…â˜…â˜†</span>
+                  <span class="text-xs text-slate-500 font-semibold">(64 reviews)</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between mt-6 pt-4 border-t border-slate-100">
+                <span class="text-xl font-extrabold text-slate-900">$89.99</span>
+                <button onclick="addToCart('Minimalist Leather Backpack', '$89.99', 'assets/images/product-5.webp')" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card 6 -->
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover border border-slate-200 flex flex-col justify-between">
+            <div class="relative h-56 bg-slate-100 overflow-hidden">
+              <img src="assets/images/product-6.webp" alt="Mechanical RGB Keyboard" class="w-full h-full object-cover" />
+              <button onclick="openQuickView('Mechanical RGB Keyboard', '$119.99', 'assets/images/product-6.webp')" class="absolute bottom-3 right-3 bg-white/90 hover:bg-white text-slate-800 text-xs font-bold px-3 py-1.5 rounded-lg shadow backdrop-blur transition">Quick View</button>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-blue-600">Gaming & Office</span>
+                <h3 class="text-base font-bold text-slate-900 mt-1">Mechanical RGB Keyboard</h3>
+                <div class="flex items-center space-x-1 mt-2">
+                  <span class="text-amber-400">â˜…â˜…â˜…â˜…â˜…</span>
+                  <span class="text-xs text-slate-500 font-semibold">(176 reviews)</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between mt-6 pt-4 border-t border-slate-100">
+                <span class="text-xl font-extrabold text-slate-900">$119.99</span>
+                <button onclick="addToCart('Mechanical RGB Keyboard', '$119.99', 'assets/images/product-6.webp')" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: Value Proposition & Service Highlights -->
+    <section class="py-16 bg-white border-y border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          <div class="flex items-start space-x-4 p-4 rounded-xl hover:bg-slate-50 transition">
+            <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v1a2 2 0 01-2 2M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
+            </div>
+            <div>
+              <h4 class="text-base font-bold text-slate-900">Free Express Shipping</h4>
+              <p class="text-xs text-slate-500 mt-1">Complimentary delivery on all orders exceeding $50 worldwide.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start space-x-4 p-4 rounded-xl hover:bg-slate-50 transition">
+            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            </div>
+            <div>
+              <h4 class="text-base font-bold text-slate-900">30-Day Guarantee</h4>
+              <p class="text-xs text-slate-500 mt-1">Zero-risk 100% money back refund promise on returns.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start space-x-4 p-4 rounded-xl hover:bg-slate-50 transition">
+            <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            </div>
+            <div>
+              <h4 class="text-base font-bold text-slate-900">24/7 VIP Support</h4>
+              <p class="text-xs text-slate-500 mt-1">Dedicated customer assistance via phone, email, and chat.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start space-x-4 p-4 rounded-xl hover:bg-slate-50 transition">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            </div>
+            <div>
+              <h4 class="text-base font-bold text-slate-900">Encrypted Payments</h4>
+              <p class="text-xs text-slate-500 mt-1">256-Bit SSL bank-grade checkout security protocol.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: Special Seasonal Promo Banner -->
+    <section class="py-16 bg-slate-900 text-white relative overflow-hidden">
+      <div class="absolute inset-0 opacity-30">
+        <img src="assets/images/promo-banner.webp" alt="Promo Banner WebP" class="w-full h-full object-cover" />
+      </div>
+      <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+        <span class="inline-block bg-amber-500 text-slate-950 font-black text-xs px-4 py-1.5 rounded-full uppercase tracking-widest shadow">
+          Limited Season Deal
+        </span>
+        <h2 class="text-3xl sm:text-5xl font-black tracking-tight">Save Up to $50 Extra on Workspace Sets</h2>
+        <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">
+          Combine ergonomic chairs, mechanical keyboards, and 4K displays to unlock instant bundle discounts automatically applied at checkout.
+        </p>
+        <div class="pt-2">
+          <a href="login.html" class="inline-block px-8 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-sm rounded-xl shadow-xl transition transform hover:scale-105">
+            Claim Workspace Bundle
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: Customer Reviews & Testimonials -->
+    <section class="py-16 bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Trusted by 100,000+ Shoppers</h2>
+          <p class="text-slate-500 text-sm mt-2">Here is what our verified buyers say about their experience</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="text-amber-400 text-lg mb-3">â˜…â˜…â˜…â˜…â˜…</div>
+              <p class="text-slate-700 text-xs sm:text-sm leading-relaxed italic">
+                "The Wireless Pro Headphones exceeded all my expectations! Sound isolation is phenomenal during plane travel and battery easily lasts 3 days."
+              </p>
+            </div>
+            <div class="flex items-center space-x-3 mt-6 pt-4 border-t border-slate-100">
+              <img src="assets/images/team-1.webp" alt="User Avatar" class="w-10 h-10 rounded-full object-cover border" />
+              <div>
+                <h4 class="text-xs font-bold text-slate-900">David Miller</h4>
+                <p class="text-[11px] text-emerald-600 font-semibold">Verified Buyer â€¢ USA</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="text-amber-400 text-lg mb-3">â˜…â˜…â˜…â˜…â˜…</div>
+              <p class="text-slate-700 text-xs sm:text-sm leading-relaxed italic">
+                "Ordered the Ergonomic Chair for my home office setup. Delivery took less than 48 hours and my lower back pain completely disappeared!"
+              </p>
+            </div>
+            <div class="flex items-center space-x-3 mt-6 pt-4 border-t border-slate-100">
+              <img src="assets/images/team-2.webp" alt="User Avatar" class="w-10 h-10 rounded-full object-cover border" />
+              <div>
+                <h4 class="text-xs font-bold text-slate-900">Jessica Vance</h4>
+                <p class="text-[11px] text-emerald-600 font-semibold">Verified Buyer â€¢ UK</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="text-amber-400 text-lg mb-3">â˜…â˜…â˜…â˜…â˜…</div>
+              <p class="text-slate-700 text-xs sm:text-sm leading-relaxed italic">
+                "Customer support is top notch. Had a small inquiry regarding shipping tracking and they resolved it in less than 5 minutes on live chat!"
+              </p>
+            </div>
+            <div class="flex items-center space-x-3 mt-6 pt-4 border-t border-slate-100">
+              <img src="assets/images/client-avatar.webp" alt="User Avatar" class="w-10 h-10 rounded-full object-cover border" />
+              <div>
+                <h4 class="text-xs font-bold text-slate-900">Marcus Sterling</h4>
+                <p class="text-[11px] text-emerald-600 font-semibold">Verified Buyer â€¢ Canada</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 9: Best Sellers Showcase -->
+    <section class="py-16 bg-white border-b border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-xl mx-auto mb-10">
+          <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">Customer Favorites</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">All-Time Best Sellers</h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div class="flex items-center space-x-4 p-4 bg-slate-50 rounded-xl border border-slate-200 hover:border-blue-300 transition">
+            <img src="assets/images/product-5.webp" alt="Backpack" class="w-20 h-20 object-cover rounded-lg bg-white" />
+            <div>
+              <h4 class="text-xs sm:text-sm font-bold text-slate-900">Minimalist Leather Backpack</h4>
+              <p class="text-xs text-blue-600 font-bold mt-1">$89.99</p>
+              <button onclick="addToCart('Minimalist Leather Backpack', '$89.99', 'assets/images/product-5.webp')" class="mt-2 text-[11px] font-bold text-slate-700 hover:text-blue-600 underline">Add Item &rarr;</button>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4 p-4 bg-slate-50 rounded-xl border border-slate-200 hover:border-blue-300 transition">
+            <img src="assets/images/product-6.webp" alt="Keyboard" class="w-20 h-20 object-cover rounded-lg bg-white" />
+            <div>
+              <h4 class="text-xs sm:text-sm font-bold text-slate-900">Mechanical RGB Keyboard</h4>
+              <p class="text-xs text-blue-600 font-bold mt-1">$119.99</p>
+              <button onclick="addToCart('Mechanical RGB Keyboard', '$119.99', 'assets/images/product-6.webp')" class="mt-2 text-[11px] font-bold text-slate-700 hover:text-blue-600 underline">Add Item &rarr;</button>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4 p-4 bg-slate-50 rounded-xl border border-slate-200 hover:border-blue-300 transition sm:col-span-2 md:col-span-1">
+            <img src="assets/images/product-2.webp" alt="Smart Watch" class="w-20 h-20 object-cover rounded-lg bg-white" />
+            <div>
+              <h4 class="text-xs sm:text-sm font-bold text-slate-900">Smart Fitness Watch V2</h4>
+              <p class="text-xs text-blue-600 font-bold mt-1">$149.99</p>
+              <button onclick="addToCart('Smart Fitness Watch V2', '$149.99', 'assets/images/product-2.webp')" class="mt-2 text-[11px] font-bold text-slate-700 hover:text-blue-600 underline">Add Item &rarr;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 10: Brand Partners & Sponsors -->
+    <section class="py-12 bg-slate-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-6">Partnered with Leading Global Manufacturers</p>
+        <div class="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-70 grayscale hover:grayscale-0 transition duration-300">
+          <span class="text-lg font-black text-slate-700 tracking-wider">TECHFLOW</span>
+          <span class="text-lg font-black text-slate-700 tracking-wider">AUDIOVIS</span>
+          <span class="text-lg font-black text-slate-700 tracking-wider">LUXEFORM</span>
+          <span class="text-lg font-black text-slate-700 tracking-wider">AEROGEAR</span>
+          <span class="text-lg font-black text-slate-700 tracking-wider">NEXGEN</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 11: Recent Blog & News Highlights -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between mb-10">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Latest Articles & Guides</h2>
+            <p class="text-slate-500 text-sm mt-1">Tips on technology, productivity, and shopping trends</p>
+          </div>
+          <a href="blog.html" class="hidden sm:inline-flex items-center text-sm font-bold text-blue-600 hover:text-blue-800">
+            View All Articles &rarr;
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 card-hover flex flex-col justify-between">
+            <div class="h-48 overflow-hidden">
+              <img src="assets/images/blog-1.webp" alt="Blog 1" class="w-full h-full object-cover" />
+            </div>
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <span class="text-[10px] font-bold bg-blue-100 text-blue-700 px-2.5 py-1 rounded-full uppercase">Technology</span>
+                <h3 class="text-base font-bold text-slate-900 mt-2 hover:text-blue-600 transition">
+                  <a href="blog.html">Top 10 E-Commerce & Tech Trends Shaping 2026</a>
+                </h3>
+                <p class="text-xs text-slate-500 mt-2 line-clamp-2">Discover how smart automation, AI assistants, and ultra-fast wireless tech are changing daily routines.</p>
+              </div>
+              <div class="mt-4 pt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-400">
+                <span>5 min read</span>
+                <a href="blog.html" class="font-bold text-blue-600 hover:underline">Read Article</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 card-hover flex flex-col justify-between">
+            <div class="h-48 overflow-hidden">
+              <img src="assets/images/blog-2.webp" alt="Blog 2" class="w-full h-full object-cover" />
+            </div>
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <span class="text-[10px] font-bold bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full uppercase">Wellness</span>
+                <h3 class="text-base font-bold text-slate-900 mt-2 hover:text-blue-600 transition">
+                  <a href="blog.html">How to Choose the Perfect Ergonomic Desk Setup</a>
+                </h3>
+                <p class="text-xs text-slate-500 mt-2 line-clamp-2">Prevent posture fatigue with posture-aligned chairs, lumbar support, and monitor arm height tips.</p>
+              </div>
+              <div class="mt-4 pt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-400">
+                <span>7 min read</span>
+                <a href="blog.html" class="font-bold text-blue-600 hover:underline">Read Article</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 card-hover flex flex-col justify-between">
+            <div class="h-48 overflow-hidden">
+              <img src="assets/images/blog-3.webp" alt="Blog 3" class="w-full h-full object-cover" />
+            </div>
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <span class="text-[10px] font-bold bg-purple-100 text-purple-700 px-2.5 py-1 rounded-full uppercase">Smart Home</span>
+                <h3 class="text-base font-bold text-slate-900 mt-2 hover:text-blue-600 transition">
+                  <a href="blog.html">Smart Home Buyer Checklist for Beginners</a>
+                </h3>
+                <p class="text-xs text-slate-500 mt-2 line-clamp-2">Everything you need to know before investing in automated lighting, smart plugs, and security hubs.</p>
+              </div>
+              <div class="mt-4 pt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-400">
+                <span>4 min read</span>
+                <a href="blog.html" class="font-bold text-blue-600 hover:underline">Read Article</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 12: Newsletter Subscription & Footer -->
+    <section class="bg-slate-950 text-white pt-16 pb-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Newsletter Callout Card -->
+        <div class="bg-gradient-to-r from-blue-900 to-indigo-900 rounded-3xl p-8 sm:p-12 mb-16 border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
+          <div class="max-w-xl text-center md:text-left">
+            <h3 class="text-2xl sm:text-3xl font-black text-white">Join the Nexus VIP Club</h3>
+            <p class="text-slate-300 text-xs sm:text-sm mt-2">Subscribe to receive exclusive discount drops, new product launches, and weekly tech guides directly to your inbox.</p>
+          </div>
+          <form onsubmit="event.preventDefault(); showToast('Subscribed to VIP newsletter!');" class="w-full md:w-auto flex flex-col sm:flex-row gap-3">
+            <input type="email" placeholder="Enter your email address..." required class="px-5 py-3.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500 w-full sm:w-80" />
+            <button type="submit" class="px-6 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm rounded-xl transition shadow-lg shrink-0">Subscribe Now</button>
+          </form>
+        </div>
+
+        <!-- Footer Links Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-8 pb-12 border-b border-slate-800 text-xs text-slate-400">
+          <div class="col-span-2">
+            <a href="index.html" class="flex items-center mb-4">
+              <img src="logo_0978.webp" alt="NexusStore Logo" class="h-9 sm:h-11 w-auto object-contain" />
+            </a>
+            <p class="text-slate-400 leading-relaxed max-w-sm mb-4">
+              Providing premium electronics, fashion, and ergonomic home office gear with 24/7 global shipping and 30-day money-back guarantee.
+            </p>
+            <p class="text-slate-500 mb-4">Contact: support@nexusstore.com | +1 (800) 555-0199</p>
+
+            <!-- Social Icons (Linking to 404 page) -->
+            <div class="flex items-center space-x-3">
+              <a href="404.html" aria-label="Facebook" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-blue-600 text-slate-400 hover:text-white flex items-center justify-center transition border border-slate-800"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+              <a href="404.html" aria-label="Twitter" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-sky-500 text-slate-400 hover:text-white flex items-center justify-center transition border border-slate-800"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+              <a href="404.html" aria-label="Instagram" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-pink-600 text-slate-400 hover:text-white flex items-center justify-center transition border border-slate-800"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+              <a href="404.html" aria-label="LinkedIn" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-blue-700 text-slate-400 hover:text-white flex items-center justify-center transition border border-slate-800"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+              <a href="404.html" aria-label="YouTube" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-red-600 text-slate-400 hover:text-white flex items-center justify-center transition border border-slate-800"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="text-sm font-bold text-white mb-4">Quick Pages</h4>
+            <ul class="space-y-2">
+              <li><a href="index.html" class="hover:text-blue-400 transition">Home</a></li>
+              <li><a href="about.html" class="hover:text-blue-400 transition">About Us</a></li>
+              <li><a href="service.html" class="hover:text-blue-400 transition">Services</a></li>
+              <li><a href="blog.html" class="hover:text-blue-400 transition">Blog & News</a></li>
+              <li><a href="contact.html" class="hover:text-blue-400 transition">Contact Us</a></li>
+              <li><a href="404.html" class="hover:text-blue-400 transition">404 Error Page</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-sm font-bold text-white mb-4">Customer Care</h4>
+            <ul class="space-y-2">
+              <li><a href="login.html" class="hover:text-blue-400 transition">User Login / Register</a></li>
+              <li><a href="404.html" class="hover:text-blue-400 transition">Help Center (404)</a></li>
+              <li><a href="404.html" class="hover:text-blue-400 transition">Order Tracking</a></li>
+              <li><a href="404.html" class="hover:text-blue-400 transition">Support Desk</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-sm font-bold text-white mb-4">Legal & Trust</h4>
+            <ul class="space-y-2">
+              <li><a href="service.html" class="hover:text-blue-400 transition">Privacy Policy</a></li>
+              <li><a href="service.html" class="hover:text-blue-400 transition">Terms of Service</a></li>
+              <li><a href="service.html" class="hover:text-blue-400 transition">Refund Guarantee</a></li>
+              <li><a href="contact.html" class="hover:text-blue-400 transition">Store Locations</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+          <p>&copy; 2026 NexusCommerce Inc. All rights reserved. WebP images &lt; 100KB certified.</p>
+          <div class="flex space-x-4 text-slate-400 font-semibold">
+            <span>VISA</span>
+            <span>MasterCard</span>
+            <span>PayPal</span>
+            <span>Apple Pay</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Quick View Modal -->
+  <div id="quick-view-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl overflow-hidden border border-slate-100">
+      <button onclick="closeQuickView()" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100 transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+      <div class="flex flex-col sm:flex-row gap-6 items-center">
+        <img id="qv-img" src="assets/images/product-1.webp" alt="Product Quick View" class="w-full sm:w-1/2 h-64 object-cover rounded-2xl bg-slate-100 border" />
+        <div class="flex-1 space-y-4">
+          <span class="text-xs font-bold bg-blue-100 text-blue-700 px-3 py-1 rounded-full uppercase">In Stock</span>
+          <h3 id="qv-title" class="text-xl font-bold text-slate-900">Product Title</h3>
+          <p id="qv-price" class="text-2xl font-black text-blue-600">$99.99</p>
+          <p id="qv-desc" class="text-xs text-slate-600 leading-relaxed">Detailed specifications and features description placeholder.</p>
+          <div class="pt-2 flex gap-3">
+            <button onclick="addToCart(document.getElementById('qv-title').textContent, document.getElementById('qv-price').textContent, document.getElementById('qv-img').src); closeQuickView();" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow transition">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
