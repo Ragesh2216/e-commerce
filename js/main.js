@@ -12,6 +12,16 @@
     }
   };
 
+  // Dashboard Sidebar Mobile Toggle
+  window.toggleDashboardSidebar = function () {
+    const sidebar = document.getElementById('dashboard-sidebar-drawer');
+    const overlay = document.getElementById('sidebar-overlay');
+    if (sidebar && overlay) {
+      sidebar.classList.toggle('-translate-x-full');
+      overlay.classList.toggle('hidden');
+    }
+  };
+
   // Cart Drawer Toggle
   window.toggleCartDrawer = function () {
     const cart = document.getElementById('cart-drawer');

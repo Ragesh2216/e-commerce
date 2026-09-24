@@ -19,27 +19,40 @@
           <img src="logo_0978.webp" alt="NexusStore Logo" class="h-10 sm:h-12 w-auto object-contain" />
         </a>
 
-        <!-- Admin Profile Info -->
-        <div class="flex items-center space-x-4">
-          <a href="index.html" class="text-xs font-semibold text-slate-400 hover:text-white hidden sm:inline">Main Store &rarr;</a>
-          <button onclick="logoutUser()" class="text-xs font-bold text-red-400 bg-red-950/60 hover:bg-red-900/80 px-3 py-1.5 rounded-lg border border-red-800 transition">
-            Sign Out
+        <!-- Admin Profile Info & Mobile Sidebar Toggle -->
+        <div class="flex items-center space-x-3">
+          <!-- Mobile Sidebar Toggle Button -->
+          <button onclick="toggleDashboardSidebar()" class="lg:hidden px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg flex items-center gap-1.5 text-xs font-bold shadow transition" aria-label="Toggle Mobile Sidebar Menu">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            <span></span>
           </button>
+
+          
         </div>
       </div>
     </div>
   </header>
 
+  <!-- Mobile Sidebar Menu Overlay -->
+  <div id="sidebar-overlay" onclick="toggleDashboardSidebar()" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 lg:hidden"></div>
+
   <!-- Admin Main Dashboard Layout -->
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="flex flex-col lg:flex-row gap-8">
       
-      <!-- Admin Dashboard Sidebar Navigation (All buttons link to 404 page) -->
-      <aside class="w-full lg:w-64 bg-slate-950 p-6 rounded-3xl border border-slate-800 shadow-sm shrink-0 space-y-6 h-fit">
-        <div class="pb-4 border-b border-slate-800">
-          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Admin Sidebar</h3>
-          <p class="text-xs font-bold text-red-400 mt-1">Management Controls</p>
+      <!-- Admin Dashboard Sidebar Navigation Drawer (Desktop: Sticky Column / Mobile: Slide-out Toggle Drawer) -->
+      <aside id="dashboard-sidebar-drawer" class="fixed inset-y-0 left-0 w-72 bg-slate-950 text-white z-50 transform -translate-x-full transition-transform duration-300 ease-in-out p-6 shadow-2xl overflow-y-auto lg:static lg:w-64 lg:translate-x-0 lg:z-auto lg:shadow-none lg:border lg:border-slate-800 lg:rounded-3xl lg:shrink-0 lg:h-fit space-y-6">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+          <div>
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Admin Sidebar</h3>
+            <p class="text-xs font-bold text-red-400 mt-1">Management Controls</p>
+          </div>
+          <!-- Close Button on Mobile View -->
+          <button onclick="toggleDashboardSidebar()" class="lg:hidden text-xs font-bold text-slate-400 hover:text-white p-1 bg-slate-900 rounded-lg border border-slate-800">
+            Close &times;
+          </button>
         </div>
+
         <nav class="space-y-2 text-xs font-bold">
           <a href="404.html" class="flex items-center justify-between p-3 rounded-xl bg-red-950/60 text-red-400 border border-red-900/60 hover:bg-red-900/80 transition">
             <span>Control Panel</span>
@@ -73,6 +86,10 @@
             <span>Security Logs</span>
             <span>&rarr;</span>
           </a>
+          <a href="index.html" class="text-xs font-semibold text-slate-400 hover:text-white hidden sm:inline"></a>
+          <button onclick="logoutUser()" class="text-xs font-bold text-red-400 bg-red-950/60 hover:bg-red-900/80 px-3 py-1.5 rounded-lg border border-red-800 transition">
+            Sign Out
+          </button>
         </nav>
       </aside>
 
